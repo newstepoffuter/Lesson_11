@@ -42,3 +42,4 @@ def test_registration_form(setup_browser):
         browser.element("[class='table-responsive']").should(have.text('123.png'))
         browser.element("[class='table-responsive']").should(have.text('123'))
         browser.element("[class='table-responsive']").should(have.text('Uttar Pradesh Agra'))
+
