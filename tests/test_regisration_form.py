@@ -6,7 +6,7 @@ from selene import browser
 
 @allure.title("Успешно заполнение формы")
 def test_registration_form(setup_browser):
-    browser = setup_browser
+
     with allure.step("Открываем форму регистрации"):
         browser.open('/automation-practice-form')
         browser.driver.execute_script("$('#fixedban').remove()")
@@ -31,7 +31,7 @@ def test_registration_form(setup_browser):
         browser.element('#city').click().element(by.text('Agra')).click()
         browser.element('#submit').click()
 
-    with allure.step("Проверяем результат заполнения формы"):
+    with allure.step("Проверяем форму"):
         browser.element('#example-modal-sizes-title-lg').should(have.text('Thanks for submitting the form'))
         browser.element("[class='table-responsive']").should(have.text('Alexandro Gonzales'))
         browser.element("[class='table-responsive']").should(have.text('Agonzales@gmal.com'))
@@ -42,4 +42,3 @@ def test_registration_form(setup_browser):
         browser.element("[class='table-responsive']").should(have.text('123.png'))
         browser.element("[class='table-responsive']").should(have.text('123'))
         browser.element("[class='table-responsive']").should(have.text('Uttar Pradesh Agra'))
-
