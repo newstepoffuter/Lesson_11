@@ -20,6 +20,7 @@ def setup_browser():
     driver = webdriver.Remote(
         command_executor=f"https://user1:1234@selenoid.autotests.cloud/wd/hub",
         options=options)
+    options.page_load_strategy = 'eager'
     browser.config.driver = driver
     browser.config.base_url = 'https://demoqa.com'
     browser.config.driver.maximize_window()
