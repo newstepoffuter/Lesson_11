@@ -1,44 +1,56 @@
+from base_page.form_page import PracticeFormPage
 import allure
-import os
-from selene import have, by, be
-from selene import browser
 
 
-@allure.title("Успешно заполнение формы")
-def test_registration_form(setup_browser):
+@allure.title("Заполнение тренировочной формы DemoQA")
+def test_practice_form(setup_browser):
+    with allure.step("Открытие формы регистрации"):
+        practice_form_page = PracticeFormPage()
+        practice_form_page.open()
 
-    with allure.step("Открываем форму регистрации"):
-        browser.open('/automation-practice-form')
-        browser.driver.execute_script("$('#fixedban').remove()")
-        browser.driver.execute_script("$('footer').remove()")
+    with allure.step("Заполнение поля имя"):
+        practice_form_page.submit_first_name("Alexandro")
+        practice_form_page.submit_last_name("Gonzales")
 
-    with allure.step("Заполняем форму"):
-        browser.element('#firstName').should(be.blank).type('Alexandro')
-        browser.element('#lastName').should(be.blank).type('Gonzales')
-        browser.element('#userEmail').should(be.blank).type('Agonzales@gmal.com')
-        browser.element('[for=gender-radio-1]').click()
-        browser.element('[id=userNumber]').should(be.blank).type('1234567890')
-        browser.element('#dateOfBirthInput').click()
-        browser.element('.react-datepicker__month-select').click().element(by.text('April')).click()
-        browser.element('.react-datepicker__year-select').click().element(by.text('2001')).click()
-        browser.element('.react-datepicker__day--007').click()
-        browser.element('#subjectsInput').type('Computer Science').press_enter()
-        browser.element('#subjectsInput').type('Maths').press_enter()
-        browser.element('[for=hobbies-checkbox-3]').click()
-        browser.element('#uploadPicture').send_keys(os.path.abspath(f"../picture/123.png"))
-        browser.element('#currentAddress').set('India')
-        browser.element('#state').click().element(by.text('Uttar Pradesh')).click()
-        browser.element('#city').click().element(by.text('Agra')).click()
-        browser.element('#submit').click()
+    with allure.step("Заполнение поля email"):
+        practice_form_page.submit_email("jopavmule@zhizni.net")
 
-    with allure.step("Проверяем форму"):
-        browser.element('#example-modal-sizes-title-lg').should(have.text('Thanks for submitting the form'))
-        browser.element("[class='table-responsive']").should(have.text('Alexandro Gonzales'))
-        browser.element("[class='table-responsive']").should(have.text('Agonzales@gmal.com'))
-        browser.element("[class='table-responsive']").should(have.text('1234567890'))
-        browser.element("[class='table-responsive']").should(have.text('7 April,2001'))
-        browser.element("[class='table-responsive']").should(have.text('Computer Science, Maths'))
-        browser.element("[class='table-responsive']").should(have.text('Music'))
-        browser.element("[class='table-responsive']").should(have.text('123.png'))
-        browser.element("[class='table-responsive']").should(have.text('123'))
-        browser.element("[class='table-responsive']").should(have.text('Uttar Pradesh Agra'))
+    with allure.step("Выбор пола"):
+        practice_form_page.submit_gender("Male")
+
+    with allure.step("Заполнение поля телефонный номер"):
+        practice_form_page.submit_user_number("0987654321")
+
+    with allure.step("Выбор даты рождения"):
+        practice_form_page.submit_date_of_birth("2003", "April", "04")
+
+    with allure.step("Выбор предметов"):
+        practice_form_page.submit_subject("Computer Science")
+
+    with allure.step("Выбор хобби"):
+        practice_form_page.submit_interest_music()
+
+    with allure.step("Загрузка изображения"):
+        practice_form_page.upload_image("123.png")
+
+    with allure.step("Заполнение полного адреса"):
+        practice_form_page.submit_address("City Name, Street Name")
+        practice_form_page.submit_state("Uttar Pradesh")
+        practice_form_page.submit_city("Merrut")
+
+    with allure.step("Отправка формы регистрации"):
+        practice_form_page.submit_button()
+
+    with allure.step("Сравнение отправленных и переданных значений"):
+        practice_form_page.check_new_user(
+            "Alexandro Gonzales",
+            "jopavmule@zhizni.net",
+            "Male",
+            "0987654321",
+            "4 April,2003",
+            "Computer Science",
+            "Music",
+            "123.png",
+            "City Name, Street Name",
+            "Uttar Pradesh Merrut"
+        )
