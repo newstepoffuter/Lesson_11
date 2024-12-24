@@ -39,16 +39,11 @@ class PracticeFormPage:
     def submit_user_number(self, value):
         self.user_number.type(value)
 
-    def submit_date_of_birth(self, month, year):
-        self.date_of_birth.click()
-
-        self.month_of_birth.click()
-        self.month_of_birth.element(month).should(match.text('April')).click()
-
-        self.year_of_birth.click()
-        self.year_of_birth.element(year).should(match.text('2003')).click()
-
-        self.day_of_birth.should(match.text('20')).click()
+    def submit_date_of_birth(self, year, month, day):
+        browser.element("#dateOfBirthInput").click()
+        browser.element("[class='react-datepicker__year-select']").click().element(by.text(f"{year}")).click()
+        browser.element("[class='react-datepicker__month-select']").click().element(by.text(f"{month}")).click()
+        browser.element(by.text(f"{day}")).click()
 
     def submit_subject(self, value):
         self.subject.type(value).press_enter()
