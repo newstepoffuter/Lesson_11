@@ -3,7 +3,7 @@ import allure
 
 
 @allure.title("Заполнение тренировочной формы DemoQA")
-def test_practice_form(browser_set):
+def test_practice_form(browser_settings):
     with allure.step("Открытие формы регистрации"):
         practice_form_page = PracticeFormPage()
         practice_form_page.open()
@@ -22,7 +22,7 @@ def test_practice_form(browser_set):
         practice_form_page.submit_user_number("0987654321")
 
     with allure.step("Выбор даты рождения"):
-        practice_form_page.submit_date_of_birth("2003", "April", "04")
+        practice_form_page.submit_date_of_birth("2003", "April", "20")
 
     with allure.step("Выбор предметов"):
         practice_form_page.submit_subject("Computer Science")
@@ -47,7 +47,7 @@ def test_practice_form(browser_set):
             "jopavmule@zhizni.net",
             "Male",
             "0987654321",
-            "4 April,2003",
+            "20 April,2003",
             "Computer Science",
             "Music",
             "123.png",

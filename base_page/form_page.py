@@ -1,5 +1,4 @@
-import match
-import resources
+from data import resources
 from selene import browser, by, have, be
 
 
@@ -20,7 +19,7 @@ class PracticeFormPage:
         self.picture = browser.element('#uploadPicture')
 
     def open(self):
-        browser.open('https://demoqa.com/automation-practice-form')
+        browser.open('/automation-practice-form')
         browser.driver.execute_script("$('#fixedban').remove()")
         browser.driver.execute_script("$('footer').remove()")
 
